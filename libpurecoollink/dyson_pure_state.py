@@ -114,12 +114,13 @@ class DysonEnvironmentalSensorState:
         humidity = self.__get_field_value(data, 'hact')
         self._humidity = 0 if humidity == 'OFF' else int(humidity)
         volatil_copounds = self.__get_field_value(data, 'vact')
-        self._volatil_compounds = 0 if volatil_copounds == 'INIT' else int(
+        self._volatil_compounds = 0 if volatil_copounds in ['INIT', 'OFF'] else int(
             volatil_copounds)
         temperature = self.__get_field_value(data, 'tact')
         self._temperature = 0 if temperature == 'OFF' else float(
             temperature) / 10
-        self._dust = int(self.__get_field_value(data, 'pact'))
+        dust = self.__get_field_value(data, 'pact')
+        self._dust = 0 if dust == 'OFF' else int(dust)
         sltm = self.__get_field_value(data, 'sltm')
         self._sleep_timer = 0 if sltm == 'OFF' else int(sltm)
 
